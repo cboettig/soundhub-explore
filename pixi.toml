@@ -1,8 +1,8 @@
 [project]
-authors = ["GondekNP <npg@berkeley.edu>"]
+authors = ["Amy Van Scoyoc <avanscoyoc@berkeley.edu>"]
 channels = ["conda-forge"]
-description = "A demo devcontainer pixi setup"
-name = "devcontainer_template"
+description = "A comparison of machine learning model performance on non-avian audio"
+name = "bird_new"
 platforms = ["linux-64"]
 version = "0.1.0"
 
@@ -10,7 +10,17 @@ version = "0.1.0"
 
 [dependencies]
 python = "3.10"
-tensorflow = "2.14.0"
+libgl = "*"
+glib = "*"
 
 [pypi-dependencies] 
+tensorflow_hub = "*"
 opensoundscape = ">=0.11.0"
+torch = "*"
+numpy = "*"
+pandas = "*"
+tqdm = "*"
+timm = "*"
+torchaudio = "*"
+tensorflow = "*"
+scikit-learn = "*"
