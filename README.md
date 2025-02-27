@@ -1,23 +1,6 @@
-# Training non-avian sound classifiers
+# Development Container Template
 
-This is a toy example using the `opensoundscapes` package as a wrapper to create custom classifiers for models pre-trained with bird embeddings.  The bird models we will be using first are `BirdNet` and Google's `Perch` model.  
-
-### Next steps
-
-We will complete the following throughout this semester: 
-
-- Learn to run the exploratory notebook `train_on_embeddings.ipynb` to create and test a custom classifer
-- Create custom classifiers using ONNX formatted pre-trained models instead of `opensoundscapes`
-- Create an approach for using stratified k-fold cross validation on multiple audio sample directories
-- Refactor code to be a python module that runs on startup
-- Send jobs to a super computer for iteration with various parameters
-- Experiment with new model architectures and data augmentation techniques
-- Write a report that compares approaches and results! :rocket:
-
-
-## Development Container 
-
-Note: This repository contains a development container that can be used both locally with `VSCode`, on the cloud with `GitHub Codespaces`, or any combination of cloud backend and IDE using `DevPod`!
+This repository provides a template for setting up a development container that can be used both locally with `VSCode`, on the cloud with `GitHub Codespaces`, or any combination of cloud backend and IDE using `DevPod`!
 
 ## Prerequisites
 
@@ -68,11 +51,23 @@ code .
 ├── .devcontainer/          # Development container configuration
 ├── .vscode/               # VS Code settings, primarily for debugger launch configs
 ├── data/                  # Data storage - ignored by `git`!
-│   ├── audio/...
-├── exploratory/          # Jupyter notebooks for interactive work
-├── src/                  # Source code - sourced as a python module (incomplete)
+│   ├── input/
+│   └── output/
+├── exploratory/          # Jupyter notebooks, and other relatively interactive work
+├── src/                  # Source code - sourced as a python module
 └── pixi.toml             # Pixi dependencies and settings
 ```
+
+## Environment Variables
+
+Environment variables are managed through a `.env` file, found at `.devcontainer/.env`. A template can be found at `.devcontainer/example.env`.
+
+```env
+DEMO_ENV_VARIABLE = some/path/to/file
+DEMO_NAME = jane_doe
+```
+
+These can be useful for defining anything that will reasonably vary across development environments, such as file paths, usernames, or API keys. This way, we don't have to hard-code these values into our codebase, and risk breaking things when we move between environments! When using a `dev container`, the `.env` becomes less relevant for things like paths - since these are managed by the container itself, but they are still useful for things like API keys and usernames.
 
 ## Getting Data
 
