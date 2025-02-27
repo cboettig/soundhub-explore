@@ -1,0 +1,25 @@
+[project]
+authors = ["GondekNP <npg@berkeley.edu>"]
+channels = ["conda-forge"]
+description = "A demo devcontainer pixi setup"
+name = "devcontainer_template"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+pytesseract = ">=0.3.13,<0.4"
+pdf2image = ">=1.17.0,<2"
+pandas = ">=2.2.3,<3"
+numpy = ">=2.0.2,<3"
+pdfplumber = ">=0.11.5,<0.12"
+jupyter = ">=1.1.1,<2"
+ipykernel = ">=6.29.5,<7"
+pip = ">=25.0,<26"
+geopandas = ">=1.0.1,<2"
+fiona = ">=1.10.1,<2"
+shapely = ">=2.0.7,<3"
+proj = ">=9.5.1,<10"
+proj-data = ">=1.20,<2"
+python-dotenv = ">=1.0.1,<2"

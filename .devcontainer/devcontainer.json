@@ -1,0 +1,59 @@
+{
+  "name": "Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "../"
+  },
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/.pixi,type=volume" // pixi cache
+  ],
+  "postCreateCommand": ".devcontainer/scripts/run_post_create.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.debugpy",
+        "jjjermiah.pixi-vscode",
+        "github.vscode-github-actions",
+        "ms-azuretools.vscode-docker",
+        "charliermarsh.ruff",
+        "esbenp.prettier-vscode",
+        "ms-python.flake8",
+        "ms-toolsai.jupyter"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.testing.pytestEnabled": true,
+        "remote.extensionKind": {
+          "esbenp.prettier-vscode": [
+            "workspace"
+          ],
+          "charliermarsh.ruff": [
+            "workspace"
+          ],
+          "ms-python.python": [
+            "workspace"
+          ]
+        },
+        "[python]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "charliermarsh.ruff"
+        },
+        "[javascript]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2.5.2": {
+      "installSsh": true
+    }
+  }
+}
