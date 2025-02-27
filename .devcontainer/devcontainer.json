@@ -4,7 +4,6 @@
     "dockerfile": "Dockerfile",
     "context": "../"
   },
-  // "workspaceMount": "source=${localWorkspaceFolder},target=${containerWorkspaceFolder},type=volume",
   "mounts": [
     "source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/.pixi,type=volume" // pixi cache
   ],
@@ -50,11 +49,11 @@
         }
       }
     }
-  }, 
-  // "features": {
-    // "ghcr.io/devcontainers/features/github-cli:1": {},
-    // "ghcr.io/devcontainers/features/common-utils:2.5.2": {
-      // "installSsh": true
-    // }
-  // }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2.5.2": {
+      "installSsh": true
+    }
+  }
 }
