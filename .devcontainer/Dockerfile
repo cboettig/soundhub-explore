@@ -1,9 +1,15 @@
-# First, grab a Unix image with pixi installed
-FROM ghcr.io/prefix-dev/pixi:0.39.5-bullseye-slim
+# First, grab a Unix image with pixi installed - courtesy of Carl
+FROM ghcr.io/schmidtdse/base:latest
+
+# Set the default user as jovyan for Jupyter
+USER jovyan
 
 # Set the working directory
 WORKDIR /workspaces/non-avian-ml-toy
 
-# Run on build scripts (system dependencies)
-COPY .devcontainer/scripts .devcontainer/scripts
+# Copy the repo into the container
+COPY . .
+
+# Run on build scripts (system dependencies and pixi env)
+# COPY .devcontainer/scripts .devcontainer/scripts
 RUN .devcontainer/scripts/run_on_build.sh
