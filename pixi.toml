@@ -2,7 +2,7 @@
 authors = ["Amy Van Scoyoc <avanscoyoc@berkeley.edu>"]
 channels = ["conda-forge"]
 description = "A comparison of machine learning model performance on non-avian audio"
-name = "bird_new"
+name = "non-avian-ml-toy"
 platforms = ["linux-64"]
 version = "0.1.0"
 
@@ -12,10 +12,11 @@ version = "0.1.0"
 python = "3.10"
 libgl = "*"
 glib = "*"
+ipykernel = ">=6.29.5,<7"
 
 [pypi-dependencies] 
-tensorflow_hub = "*"
 opensoundscape = ">=0.11.0"
+tensorflow_hub = "*"
 torch = "*"
 numpy = "*"
 pandas = "*"
