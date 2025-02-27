@@ -2,7 +2,7 @@
 FROM ghcr.io/prefix-dev/pixi:0.39.5-bullseye-slim
 
 # Set the working directory
-WORKDIR /workspaces/ocr_extract_nps_tables
+WORKDIR /workspaces/non-avian-ml-toy
 
 # Run on build scripts (system dependencies)
 COPY .devcontainer/scripts .devcontainer/scripts

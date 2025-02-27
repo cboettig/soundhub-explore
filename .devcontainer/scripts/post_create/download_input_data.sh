@@ -1,15 +1,29 @@
-#/bin/bash
+#!/bin/bash
 
-# Check if input data directory exists
-if [ ! -d "/workspaces/ocr_extract_nps_tables/data/input" ]; then
-
-    # Create input data directory
-    mkdir -p /workspaces/ocr_extract_nps_tables/data/input
-
-    # Download the data, shared as public links from Google Cloud Storage Bucket
-    echo "Downloading input data..."
-    wget -O /workspaces/ocr_extract_nps_tables/data/input/Appendix_A_JOTR_Vegetation_Descriptions_2012.pdf https://storage.googleapis.com/ecotech_dev_demo/Appendix_A_JOTR_Vegetation_Descriptions_2012.pdf
-    wget -O /workspaces/ocr_extract_nps_tables/data/input/table_mapping.json https://storage.googleapis.com/ecotech_dev_demo/table_mapping.json
-
+# Ensure unzip is installed
+if ! command -v unzip &> /dev/null; then
+    echo "Installing unzip..."
+    sudo apt update && sudo apt install -y unzip
 fi
 
+# Check if the directory exists
+if [ ! -d "/workspaces/non-avian-ml-toy" ]; then
+    mkdir -p /workspaces/non-avian-ml-toy
+fi
+
+# Download data if not already present
+if [ ! -f "/workspaces/non-avian-ml-toy/data.zip" ]; then
+    echo "Downloading input data..."
+    curl -L -o /workspaces/non-avian-ml-toy/data.zip "https://storage.googleapis.com/dse-staff-public/data.zip"
+fi
+
+# Verify download before unzipping
+if [ -f "/workspaces/non-avian-ml-toy/data.zip" ]; then
+    echo "Unzipping data..."
+    unzip -o /workspaces/non-avian-ml-toy/data.zip -d /workspaces/non-avian-ml-toy/
+    rm /workspaces/non-avian-ml-toy/data.zip
+    echo "Data extraction complete!"
+else
+    echo "Download failed. File not found!"
+    exit 1
+fi
