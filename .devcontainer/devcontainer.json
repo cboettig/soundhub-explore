@@ -22,7 +22,7 @@
         "ms-toolsai.jupyter"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.defaultInterpreterPath": "/workspaces/non-avian-ml-toy/.pixi/envs/default/bin/python",
         "python.testing.pytestEnabled": true,
         "remote.extensionKind": {
           "esbenp.prettier-vscode": [
