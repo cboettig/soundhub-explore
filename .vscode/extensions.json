@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.debugpy",
+        "jjjermiah.pixi-vscode",
+        "github.vscode-github-actions",
+        "ms-azuretools.vscode-docker",
+        "charliermarsh.ruff",
+        "esbenp.prettier-vscode",
+        "ms-python.flake8",
+        "ms-toolsai.jupyter"
+    ]
+}
