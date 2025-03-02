@@ -1,0 +1,7 @@
+{
+    "name": "Generic Dockerfile",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    }
+}
