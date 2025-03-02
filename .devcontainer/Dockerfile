@@ -9,7 +9,7 @@ ENV IS_DEVCONTAINER=$IS_DEVCONTAINER
 WORKDIR /workspaces/non-avian-ml-toy
 
 # Copy the repository into the container
-COPY . .
+COPY --chown=jovyan:users . .
 
 # Run on build scripts (system dependencies)
 RUN .devcontainer/scripts/run_on_build.sh
