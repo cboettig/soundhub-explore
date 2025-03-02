@@ -2,7 +2,6 @@
 
 # Check if the environment variable IS_DEVCONTAINER is set to true
 if [ "$IS_DEVCONTAINER" = "true" ]; then
-  # If it's true, tail /dev/null to keep the container running
   echo "Running in DevContainer mode. Keeping container alive..."
   tail -f /dev/null
 else

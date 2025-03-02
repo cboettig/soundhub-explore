@@ -15,4 +15,4 @@ COPY . .
 RUN .devcontainer/scripts/run_on_build.sh
 
 # Handle startup - if run as prod, run the workflow, if not, stay alive
-RUN .devcontainer/scripts/handle_startup.sh
+CMD [ ".devcontainer/scripts/handle_startup.sh" ]
