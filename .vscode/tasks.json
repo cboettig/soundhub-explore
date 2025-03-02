@@ -10,7 +10,7 @@
                 "command": "cat .vscode/extensions.json | jq .recommendations[] | xargs -n 1 code . --install-extension"
             },
             "runOptions": {
-                "runOn": "folderOpen"
+                "runOn": "default"
             },
             "presentation": {
                 "reveal": "always"
