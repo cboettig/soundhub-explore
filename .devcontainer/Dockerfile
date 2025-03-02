@@ -1,5 +1,5 @@
 # First, grab a Unix image with pixi installed
-FROM ghcr.io/schmidtdse/base:latest as base
+FROM ghcr.io/schmidtdse/base:latest AS base
 
 # ARG to note whether this is prod or dev mode
 ARG IS_DEVCONTAINER=false

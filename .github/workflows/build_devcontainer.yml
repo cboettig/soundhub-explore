@@ -21,7 +21,9 @@ jobs:
 
       - name: Build the Docker image
         run: |
-            docker build .devcontainer \
+            docker build . \
+            --build-arg IS_DEVCONTAINER=true \
+            --file .devcontainer/Dockerfile \
             --tag ghcr.io/avanscoyoc/non-avian-ml-toy/devcontainer:latest
 
       - name: Publish
