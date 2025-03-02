@@ -11,6 +11,7 @@ import numpy as np
 import random
 import torch
 import sklearn
+import argparse
 
 #set up plotting
 from matplotlib import pyplot as plt
@@ -21,63 +22,68 @@ from sklearn.metrics import roc_auc_score
 from opensoundscape.ml import bioacoustics_model_zoo as bmz
 from opensoundscape.ml.shallow_classifier import quick_fit 
 
-# %% [markdown]
-# Pre-processing
+DATA_SUBFOLDER_NAME = "data"
+DATA_PATH = "/workspaces/non-avian-ml-toy/data/audio"
+
 
 # %%
-datapath = "/workspaces/non-avian-ml-toy/data/audio"
-species = "bullfrog"
-datatype = "data"
+def fit_model(species, model_type, batch_size):
 
-files = glob.glob(os.path.join(datapath, species, datatype, "**/*.wav"), recursive=True)
-labels = pd.DataFrame({"file": files, "present": ["pos" in f.lower() for f in files]})
+    files = glob.glob(os.path.join(DATA_PATH, species, DATA_SUBFOLDER_NAME, "**/*.wav"), recursive=True)
+    labels = pd.DataFrame({"file": files, "present": ["pos" in f.lower() for f in files]})
 
-# Do this step ONLY to convert to 5 second dataset to run perch!!!!
-labels['file'] = labels['file'].apply(lambda x: re.sub(r'data', 'data_5s', x, count=2).replace('data_5s', 'data', 1)) 
+    labels['file'] = labels['file'].astype(str)
+    labels.set_index("file", inplace=True)
 
-labels['file'] = labels['file'].astype(str)
-labels.set_index("file", inplace=True)
+    labels_train, labels_val = sklearn.model_selection.train_test_split(labels[['present']])
 
-pd.set_option('display.max_colwidth', 100)
-print(labels.head())
+    # Run Models
 
-# %%
-labels_train, labels_val = sklearn.model_selection.train_test_split(labels[['present']])
+    torch.manual_seed(0)
+    random.seed(0)
+    np.random.seed(0)
 
-# %% [markdown]
-# Run Models
+    if args.model_type == "perch":
 
-# %%
-torch.manual_seed(0)
-random.seed(0)
-np.random.seed(0)
+        # Do this step ONLY to convert to 5 second dataset to run perch!!!!
+        labels['file'] = labels['file'].apply(lambda x: re.sub(r'data', 'data_5s', x, count=2).replace('data_5s', 'data', 1)) 
+        model = torch.hub.load('kitzeslab/bioacoustics-model-zoo', "Perch", trust_repo=True)
 
-# %%
-model = torch.hub.load('kitzeslab/bioacoustics-model-zoo', "Perch", trust_repo=True)
+    elif args.model_type == "birdnet":
 
-# %%
-emb_train = model.embed(labels_train, return_dfs=False, batch_size=128, num_workers=0)
-emb_val = model.embed(labels_val, return_dfs=False, batch_size=128, num_workers=0)
+        model = torch.hub.load('kitzeslab/bioacoustics-model-zoo', "BirdNET", trust_repo=True)
 
-model.change_classes(['present'])
+    else:
 
-# %% [markdown]
-# In the prior step is where the kernel crashes while embedding, apparently could be caused by a package installation issue with tensorflow or numpy (https://github.com/microsoft/vscode-jupyter/wiki/Kernel-crashes) 
-# 
-# Error: "The Kernel crashed while executing code in the current cell or a previous cell. Please review the code in the cell(s) to identify a possible cause of the failure."
+        raise ValueError("Invalid model type. Choose 'perch' or 'birdnet'.")
 
-# %%
-quick_fit(model.network, emb_train, labels_train.values, emb_val, labels_val.values, steps=1000)
+    emb_train = model.embed(labels_train, return_dfs=False, batch_size=args.batch_size, num_workers=0)
+    emb_val = model.embed(labels_val, return_dfs=False, batch_size=args.batch_size, num_workers=0)
 
-# %%
-predictions = model.network(torch.tensor(emb_val).float()).detach().numpy()
-score = roc_auc_score(labels_val.values, predictions, average=None)
+    model.change_classes(['present'])
 
-print("Finished training with AUC: ", score)
+    quick_fit(model.network, emb_train, labels_train.values, emb_val, labels_val.values, steps=1000)
 
-# %%
-plt.hist(predictions[labels_val==True],bins=20,alpha=0.5,label='positives')
-plt.hist(predictions[labels_val==False],bins=20,alpha=0.5,label='negatives')
-plt.legend()
+    predictions = model.network(torch.tensor(emb_val).float()).detach().numpy()
+    score = roc_auc_score(labels_val.values, predictions, average=None)
 
+    print("Finished training with AUC: ", score)
 
+    # plt.hist(predictions[labels_val==True],bins=20,alpha=0.5,label='positives')
+    # plt.hist(predictions[labels_val==False],bins=20,alpha=0.5,label='negatives')
+    # plt.legend()
+    # plt.show()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run bioacoustics model")
+    parser.add_argument("--batch_size", type=int, default=128, help="Batch size for embedding")
+    parser.add_argument("--model_type", type=str, choices=["perch", "birdnet"], default="perch", help="Model type to use")
+    parser.add_argument("--species", type=str, default="bullfrog", help="Species to run model on")
+
+    args = parser.parse_args()
+
+    species = args.species
+    model_type = args.model_type
+    batch_size = args.batch_size
+
+    fit_model(species = species, model_type = model_type, batch_size = batch_size)
