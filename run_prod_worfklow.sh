@@ -4,4 +4,4 @@
 python -m src.fit_model \
 --species ${SPECIES:-bullfrog} \
 --model_type ${MODEL_TYPE:-birdnet} \
---batch_size ${BATCH_SIZE:-128}
+--batch_size ${BATCH_SIZE:-128}`
