@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Ensure unzip is installed
-if ! command -v unzip &> /dev/null; then
-    echo "Installing unzip..."
-    sudo apt update && sudo apt install -y unzip
-fi
-
 # Check if the directory exists
 if [ ! -d "/workspaces/non-avian-ml-toy" ]; then
     mkdir -p /workspaces/non-avian-ml-toy

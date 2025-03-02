@@ -1,9 +1,18 @@
 # First, grab a Unix image with pixi installed
-FROM ghcr.io/prefix-dev/pixi:0.41.4-bullseye-slim
+FROM ghcr.io/schmidtdse/base:latest as base
+
+# ARG to note whether this is prod or dev mode
+ARG IS_DEVCONTAINER=false
+ENV IS_DEVCONTAINER=$IS_DEVCONTAINER
 
 # Set the working directory
 WORKDIR /workspaces/non-avian-ml-toy
 
+# Copy the repository into the container
+COPY . .
+
 # Run on build scripts (system dependencies)
-COPY .devcontainer/scripts .devcontainer/scripts
 RUN .devcontainer/scripts/run_on_build.sh
+
+# Handle startup - if run as prod, run the workflow, if not, stay alive
+RUN .devcontainer/scripts/handle_startup.sh
