@@ -9,7 +9,7 @@
       "module": "src.main",
       "justMyCode": false,
       "pythonPath": "${cwd}/.pixi/envs/default/bin/python",
-      "args": ["--pdf", "data/input/Appendix_A_JOTR_Vegetation_Descriptions_2012.pdf", "--table_mapping_json", "data/input/table_mapping.json", "--output_csv_dir", "data/output"],
+      "args": ["--species", "bullfrog", "--model_type", "birdnet", "--batch_size", "128"],
       "envFile": "${workspaceFolder}/.devcontainer/.env"
     }
   ]
