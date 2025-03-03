@@ -1,6 +1,9 @@
 # First, grab a Unix image with pixi installed
 FROM ghcr.io/schmidtdse/base:latest AS base
 
+# Cache buster
+ARG CACHE_BUSTER=1
+
 # ARG to note whether this is prod or dev mode
 ARG IS_DEVCONTAINER=false
 ENV IS_DEVCONTAINER=$IS_DEVCONTAINER

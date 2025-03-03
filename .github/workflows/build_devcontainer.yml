@@ -30,9 +30,17 @@ jobs:
         run: docker system prune -a -f
 
       - name: Build the Docker image
+        env:
+          DOCKER_BUILDKIT: 1
         run: |
+            CACHE_BUSTER=""
+            if [ "${{ github.event.inputs.no_cache }}" = "true" ]; then
+              CACHE_BUSTER="--build-arg CACHE_BUSTER=$(date +%s)"
+            fi
+
             docker build . \
             ${{ github.event.inputs.no_cache == 'true' && '--no-cache' || '' }} \
+            $CACHE_BUSTER \
             --build-arg IS_DEVCONTAINER=true \
             --file .devcontainer/Dockerfile \
             --tag ghcr.io/avanscoyoc/non-avian-ml-toy/devcontainer:latest
