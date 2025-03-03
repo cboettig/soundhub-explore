@@ -22,6 +22,8 @@ RUN pwd
 RUN ls -la
 
 # Copy pixi env into the container
+COPY --chown=jovyan:users pixi.toml pixi.toml
+COPY --chown=jovyan:users pixi.lock pixi.lock
 RUN .devcontainer/scripts/direct_call/verify_or_install_pixi_env.sh
 
 # Copy the rest of the files into the container
