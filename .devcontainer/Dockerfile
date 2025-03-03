@@ -11,15 +11,21 @@ ENV IS_DEVCONTAINER=$IS_DEVCONTAINER
 # Set the working directory
 WORKDIR /workspaces/non-avian-ml-toy
 
-# Copy the repository into the container
-COPY --chown=jovyan:users . .
+# Copy the devcontainer scripts into the container
+COPY --chown=jovyan:users .devcontainer/scripts .devcontainer/scripts
 
 # Run on build scripts (system dependencies)
 RUN .devcontainer/scripts/run_on_build.sh
 
+# Print the current directory (DEBUG)
+RUN pwd
+RUN ls -la
+
 # Copy pixi env into the container
 RUN .devcontainer/scripts/direct_call/verify_or_install_pixi_env.sh
-COPY --chown=jovyan:users .pixi .pixi
+
+# Copy the rest of the files into the container
+COPY --chown=jovyan:users . .
 
 # Handle startup - if run as prod, run the workflow, if not, stay alive
 CMD [ ".devcontainer/scripts/handle_startup.sh" ]
