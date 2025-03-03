@@ -1,6 +1,12 @@
 name: Docker Build - Dev Container
 on:
-  workflow_dispatch: null
+  workflow_dispatch:
+    inputs:
+      no_cache:
+        description: 'Use --no-cache flag for Docker build'
+        required: false
+        default: false
+        type: boolean
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,6 +28,7 @@ jobs:
       - name: Build the Docker image
         run: |
             docker build . \
+            ${{ github.event.inputs.no_cache == 'true' && '--no-cache' || '' }} \
             --build-arg IS_DEVCONTAINER=true \
             --file .devcontainer/Dockerfile \
             --tag ghcr.io/avanscoyoc/non-avian-ml-toy/devcontainer:latest
