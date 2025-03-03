@@ -25,6 +25,10 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
 
+      - name: Clear Docker cache if requested
+        if: ${{ github.event.inputs.no_cache == 'true' }}
+        run: docker system prune -a -f
+
       - name: Build the Docker image
         run: |
             docker build . \
