@@ -15,6 +15,7 @@ COPY --chown=jovyan:users . .
 RUN .devcontainer/scripts/run_on_build.sh
 
 # Copy pixi env into the container
+RUN .devcontainer/scripts/direct_call/verify_or_install_pixi_env.sh
 COPY --chown=jovyan:users .pixi .pixi
 
 # Handle startup - if run as prod, run the workflow, if not, stay alive
