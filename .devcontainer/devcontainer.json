@@ -1,14 +1,14 @@
-// {
-//     "name": "Repo Dev Container",
-//     "image": "ghcr.io/avanscoyoc/non-avian-ml-toy/devcontainer:latest"
-// }
 {
-    "name": "Generic Dockerfile",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": "..",
-        "args": {
-            "IS_DEVCONTAINER": "true"
-        }
-    }
+    "name": "Repo Dev Container",
+    "image": "ghcr.io/avanscoyoc/non-avian-ml-toy/devcontainer:latest"
 }
+// {
+//     "name": "Generic Dockerfile",
+//     "build": {
+//         "dockerfile": "Dockerfile",
+//         "context": "..",
+//         "args": {
+//             "IS_DEVCONTAINER": "true"
+//         }
+//     }
+// }
