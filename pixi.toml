@@ -30,3 +30,4 @@ timm = "*"
 torchaudio = "*"
 executing = "*"
 scikit-learn = ">=1.6.1, <2"
+bioacoustics-model-zoo = { git = "git+https://github.com/kitzeslab/bioacoustics-model-zoo" }
